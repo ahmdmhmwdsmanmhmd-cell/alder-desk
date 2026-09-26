@@ -26,38 +26,46 @@ if st.button("🔄 تحويل إلى مسودة طلب"):
         st.stop()
 
     try:
-    client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
-        response = client.responses.create(
-            model="gpt-5-mini",
-            input=[
-                {
-                    "role": "system",
-                    "content": """
-أنت مساعد مبيعات لموزعي مستحضرات التجميل.
-حوّل رسالة العميل إلى قائمة طلب منظمة.
-استخرج فقط:
+    response = client.responses.create(
+        model="gpt-5-mini",
+        input=[
+            {
+                "role": "system",
+                "content": """
+أنت مساعد مبيعات ذكي متخصص في مستحضرات التجميل.
+حوّل طلب العميل إلى قائمة منظمة.
+استخرج من الطلب:
 product = اسم المنتج
-sku = رقم المنتج إن وُجد، وإلا اتركه فارغاً
+sku = رقم المنتج إن وجد، وإلا اتركه فارغًا
 quantity = الكمية
 unit = الوحدة
 
-أعد النتيجة بصيغة JSON فقط.
+أعد النتيجة في JSON فقط بهذا الشكل:
+{
+  "items": [
+    {
+      "product": "اسم المنتج",
+      "sku": "",
+      "quantity": 0,
+      "unit": "وحدة"
+    }
+  ]
+}
 """
-                },
-                {
-                    "role": "user",
-                    "content": order_text
-                }
-            ]
-        )
+            },
+            {
+                "role": "user",
+                "content": order_text
+            }
+        ]
+    )
 
-        result = json.loads(response.output_text)
+    result = json.loads(response.output_text)
 
-        st.success("✅ تم إنشاء مسودة الطلب")
-
-        st.json(result)
-
+    st.success("✅ تم تحويل الطلب إلى مسودة منظمة")
+    st.json(result)
     except Exception as e:
         st.error("حدث خطأ أثناء تشغيل الذكاء الاصطناعي.")
         st.info(
