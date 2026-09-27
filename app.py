@@ -62,10 +62,10 @@ unit = الوحدة
         ]
     )
 
-    result = json.loads(response.output_text)
+        result = json.loads(response.output_text)
 
-    st.success("✅ تم تحويل الطلب إلى مسودة منظمة")
-    st.json(result)
+        st.success("✅ تم تحويل الطلب إلى مسودة منظمة")
+        st.json(result)
     except Exception as e:
         st.error("حدث خطأ أثناء تشغيل الذكاء الاصطناعي.")
         st.info(
