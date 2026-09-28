@@ -27,7 +27,7 @@ if st.button("🔄 تحويل إلى مسودة طلب"):
 
     try:
         api_key = st.secrets["OPENAI_API_KEY"].strip()
-    client = OpenAI(api_key=api_key)
+        client = OpenAI(api_key=api_key)
 
         response = client.responses.create(
         model="gpt-5-mini",
