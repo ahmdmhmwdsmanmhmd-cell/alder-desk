@@ -67,7 +67,4 @@ unit = الوحدة
         st.success("✅ تم تحويل الطلب إلى مسودة منظمة")
         st.json(result)
     except Exception as e:
-        st.error("حدث خطأ أثناء تشغيل الذكاء الاصطناعي.")
-        st.info(
-            "سنقوم في الخطوة التالية بإعداد مفتاح OpenAI وربط Alder Desk بالذكاء الاصطناعي."
-        )
+        st.exception(e)
